@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rizky FM — Tune Into My World</title>
+
+<style>
+/* =====================================================
+   RIZKY FM — CSS
+===================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root{
+    --bg:#080611;
+    --bg2:#100b1c;
+    --card:rgba(25,18,43,.72);
+    --card-hover:rgba(39,28,63,.9);
+
+    --white:#faf7ff;
+    --muted:#aaa2b8;
+
+    --purple:#9b5cff;
+    --pink:#ff5ebc;
+    --cyan:#4bdcff;
+    --orange:#ff9c5c;
+    --green:#62e6a7;
+
+    --border:rgba(255,255,255,.1);
+
+    --shadow:0 25px 70px rgba(0,0,0,.45);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    font-family:"Inter",sans-serif;
+    color:var(--white);
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(155,92,255,.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(75,220,255,.12),
+            transparent 27%
+        ),
+        radial-gradient(
+            circle at 50% 90%,
+            rgba(255,94,188,.10),
+            transparent 30%
+        ),
+        var(--bg);
+
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+    opacity:.5;
+    mask-image:linear-gradient(
+        to bottom,
+        black,
+        transparent 90%
+    );
+}
+
+button{
+    font-family:inherit;
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+.container{
+    width:min(1150px,92%);
+    margin:auto;
+}
+
+section{
+    padding:100px 0;
+}
+
+.hidden{
+    display:none!important;
+}
+
+
+/* =====================================================
+   INTRO
+===================================================== */
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#06040b;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+}
+
+#intro.hide{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.intro-content{
+    text-align:center;
+}
+
+.intro-logo{
+    font-family:"Space Grotesk",sans-serif;
+    font-size:clamp(4rem,11vw,8rem);
+    font-weight:800;
+    letter-spacing:-.08em;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--purple),
+            var(--pink),
+            var(--orange)
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+
+    animation:logoGlow 2s infinite alternate;
+}
+
+@keyframes logoGlow{
+
+    from{
+        filter:drop-shadow(
+            0 0 5px
+            rgba(155,92,255,.2)
+        );
+    }
+
+    to{
+        filter:drop-shadow(
+            0 0 35px
+            rgba(155,92,255,.5)
+        );
+    }
+}
+
+.intro-sub{
+    color:var(--muted);
+    margin:8px 0 30px;
+}
+
+.intro-equalizer{
+    height:70px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:5px;
+
+    margin-bottom:30px;
+}
+
+.intro-equalizer span{
+    width:5px;
+    height:20px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            var(--cyan),
+            var(--pink)
+        );
+
+    animation:eq .7s infinite alternate;
+}
+
+.intro-equalizer span:nth-child(2){
+    animation-delay:.1s;
+}
+
+.intro-equalizer span:nth-child(3){
+    animation-delay:.2s;
+}
+
+.intro-equalizer span:nth-child(4){
+    animation-delay:.3s;
+}
+
+.intro-equalizer span:nth-child(5){
+    animation-delay:.15s;
+}
+
+.intro-equalizer span:nth-child(6){
+    animation-delay:.4s;
+}
+
+@keyframes eq{
+
+    from{
+        height:10px;
+    }
+
+    to{
+        height:60px;
+    }
+}
+
+.enter-button{
+    padding:13px 25px;
+
+    border:none;
+    border-radius:999px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink)
+        );
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 12px 40px
+        rgba(155,92,255,.3);
+
+    transition:.25s;
+}
+
+.enter-button:hover{
+    transform:translateY(-3px) scale(1.02);
+
+    box-shadow:
+        0 18px 50px
+        rgba(255,94,188,.3);
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    backdrop-filter:blur(20px);
+
+    background:
+        rgba(8,6,17,.65);
+
+    border-bottom:
+        1px solid var(--border);
+}
+
+.navbar{
+    height:72px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+}
+
+.logo{
+    font-family:"Space Grotesk";
+    font-size:1.2rem;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.logo span{
+    color:var(--cyan);
+}
+
+.nav-links{
+    display:flex;
+    gap:6px;
+
+    overflow-x:auto;
+    scrollbar-width:none;
+}
+
+.nav-links::-webkit-scrollbar{
+    display:none;
+}
+
+.nav-links a{
+    padding:9px 12px;
+
+    border-radius:999px;
+
+    color:var(--muted);
+
+    font-size:.78rem;
+
+    white-space:nowrap;
+
+    transition:.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:white;
+    background:rgba(255,255,255,.08);
+}
+
+.on-air{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    color:var(--green);
+
+    font-size:.7rem;
+    font-weight:800;
+
+    white-space:nowrap;
+}
+
+.on-air-dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+        0 0 12px
+        var(--green);
+
+    animation:pulse 1.3s infinite;
+}
+
+@keyframes pulse{
+
+    50%{
+        opacity:.35;
+        transform:scale(.7);
+    }
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero{
+    min-height:
+        calc(100vh - 72px);
+
+    display:flex;
+    align-items:center;
+
+    padding-top:60px;
+}
+
+.hero-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        .9fr;
+
+    gap:60px;
+
+    align-items:center;
+}
+
+.station-tag{
+    display:inline-flex;
+    align-items:center;
+
+    gap:9px;
+
+    padding:8px 13px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:999px;
+
+    color:var(--muted);
+
+    font-size:.75rem;
+
+    background:
+        rgba(255,255,255,.03);
+
+    margin-bottom:22px;
+}
+
+.hero-title{
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(4rem,9vw,7.5rem);
+
+    line-height:.85;
+
+    letter-spacing:-.09em;
+}
+
+.gradient-text{
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--purple),
+            var(--pink),
+            var(--orange)
+        );
+
+    -webkit-background-clip:text;
+    background-clip:text;
+
+    color:transparent;
+}
+
+.hero-description{
+    max-width:620px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    margin:
+        27px 0;
+}
+
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+
+    gap:11px;
+}
+
+.button{
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.045);
+
+    color:white;
+
+    padding:12px 17px;
+
+    border-radius:13px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.button:hover{
+    transform:translateY(-3px);
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+.button.primary{
+    border:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink)
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(155,92,255,.25);
+}
+
+
+/* =====================================================
+   RADIO PLAYER
+===================================================== */
+
+.radio{
+    padding:27px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(37,26,62,.9),
+            rgba(12,9,22,.9)
+        );
+
+    box-shadow:var(--shadow);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.radio::before{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    right:-150px;
+    top:-150px;
+
+    border-radius:50%;
+
+    background:
+        rgba(155,92,255,.18);
+
+    filter:blur(35px);
+}
+
+.radio-header{
+    display:flex;
+
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:23px;
+}
+
+.frequency{
+    font-family:"Space Grotesk";
+
+    font-size:1.7rem;
+    font-weight:700;
+}
+
+.frequency small{
+    color:var(--muted);
+    font-size:.8rem;
+}
+
+.broadcast{
+    color:var(--green);
+
+    font-size:.63rem;
+    font-weight:800;
+
+    letter-spacing:.13em;
+}
+
+.radio-screen{
+    padding:22px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    background:
+        rgba(0,0,0,.2);
+}
+
+.screen-label{
+    color:var(--muted);
+
+    font-size:.67rem;
+
+    letter-spacing:.15em;
+}
+
+.track-name{
+    font-family:"Space Grotesk";
+
+    font-size:1.6rem;
+
+    margin-top:7px;
+}
+
+.track-description{
+    color:var(--muted);
+
+    font-size:.8rem;
+
+    margin-top:5px;
+}
+
+.visualizer{
+    height:90px;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    gap:5px;
+
+    margin:15px 0;
+}
+
+.visualizer span{
+    width:5px;
+
+    height:20px;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            var(--cyan),
+            var(--pink)
+        );
+
+    animation:eq .7s infinite alternate;
+}
+
+.visualizer.paused span{
+    animation-play-state:paused;
+}
+
+.visualizer span:nth-child(2n){
+    animation-delay:.1s;
+}
+
+.visualizer span:nth-child(3n){
+    animation-delay:.25s;
+}
+
+.visualizer span:nth-child(4n){
+    animation-delay:.4s;
+}
+
+.progress-container{
+    cursor:pointer;
+}
+
+.progress{
+    height:5px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0;
+    height:100%;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--pink)
+        );
+}
+
+.time{
+    display:flex;
+    justify-content:space-between;
+
+    color:var(--muted);
+
+    font-size:.65rem;
+
+    margin-top:6px;
+}
+
+.player-buttons{
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    gap:12px;
+
+    margin-top:20px;
+}
+
+.player-button{
+    width:43px;
+    height:43px;
+
+    border-radius:50%;
+
+    border:
+        1px solid var(--border);
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.player-button:hover{
+    transform:scale(1.08);
+}
+
+.player-button.main{
+    width:56px;
+    height:56px;
+
+    border:none;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink)
+        );
+
+    font-size:1rem;
+}
+
+.frequency-line{
+    height:25px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+
+    margin-top:20px;
+
+    opacity:.45;
+}
+
+.frequency-line span{
+    width:1px;
+
+    height:8px;
+
+    background:white;
+}
+
+.frequency-line span:nth-child(5n){
+    height:17px;
+}
+
+.frequency-label{
+    display:flex;
+    justify-content:space-between;
+
+    color:var(--muted);
+
+    font-size:.6rem;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section-header{
+    margin-bottom:32px;
+}
+
+.section-label{
+    color:var(--cyan);
+
+    font-size:.7rem;
+
+    font-weight:800;
+
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
+
+    margin-bottom:8px;
+}
+
+.section-title{
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(2.2rem,5vw,4rem);
+
+    letter-spacing:-.06em;
+}
+
+.section-description{
+    max-width:650px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    margin-top:12px;
+}
+
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+.about-grid{
+    display:grid;
+
+    grid-template-columns:.8fr 1.2fr;
+
+    gap:20px;
+}
+
+.card{
+    padding:28px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:24px;
+
+    background:
+        var(--card);
+
+    box-shadow:var(--shadow);
+}
+
+.avatar{
+    width:115px;
+    height:115px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--pink),
+            var(--orange)
+        );
+
+    font-family:"Space Grotesk";
+
+    font-size:2.7rem;
+
+    font-weight:800;
+
+    margin-bottom:20px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(155,92,255,.2);
+}
+
+.profile-name{
+    font-family:"Space Grotesk";
+
+    font-size:1.7rem;
+}
+
+.profile-role{
+    color:var(--cyan);
+
+    margin:6px 0 17px;
+}
+
+.card-text{
+    color:var(--muted);
+
+    line-height:1.8;
+}
+
+.quote{
+    margin-top:22px;
+
+    padding:15px;
+
+    border-left:
+        3px solid var(--pink);
+
+    background:
+        rgba(255,94,188,.05);
+
+    color:#d6cedf;
+
+    font-style:italic;
+
+    border-radius:
+        0 12px 12px 0;
+}
+
+.stats{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+    margin-top:22px;
+}
+
+.stat{
+    padding:15px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.03);
+}
+
+.stat strong{
+    font-size:1.25rem;
+}
+
+.stat small{
+    display:block;
+
+    color:var(--muted);
+
+    margin-top:4px;
+}
+
+
+/* =====================================================
+   GET TO KNOW ME
+===================================================== */
+
+.interview-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        .7fr;
+
+    gap:20px;
+}
+
+.interview-card{
+    min-height:420px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    padding:32px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:25px;
+
+    background:
+        var(--card);
+}
+
+.host{
+    color:var(--pink);
+
+    font-size:.72rem;
+
+    font-weight:800;
+
+    letter-spacing:.13em;
+
+    margin-bottom:10px;
+}
+
+.question{
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(1.8rem,4vw,3rem);
+
+    line-height:1.1;
+
+    letter-spacing:-.04em;
+}
+
+.answer{
+    min-height:65px;
+
+    color:var(--muted);
+
+    line-height:1.8;
+
+    margin:20px 0 25px;
+}
+
+.interview-buttons{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+}
+
+.question-number{
+    color:var(--muted);
+
+    font-size:.7rem;
+
+    margin-top:17px;
+}
+
+.quick-facts{
+    padding:28px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(75,220,255,.09),
+            rgba(155,92,255,.08)
+        );
+}
+
+.quick-facts h3{
+    font-family:"Space Grotesk";
+
+    font-size:1.5rem;
+
+    margin-bottom:18px;
+}
+
+.fact-list{
+    display:grid;
+
+    gap:11px;
+}
+
+.fact{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:13px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:15px;
+
+    background:
+        rgba(0,0,0,.14);
+}
+
+.fact-icon{
+    font-size:1.3rem;
+}
+
+.fact span{
+    display:block;
+
+    color:var(--muted);
+
+    font-size:.78rem;
+
+    margin-top:3px;
+}
+
+
+/* =====================================================
+   THINGS I LOVE
+===================================================== */
+
+.love-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    gap:12px;
+}
+
+.love-card{
+    min-height:190px;
+
+    padding:20px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    background:
+        var(--card);
+
+    transition:.25s;
+}
+
+.love-card:hover{
+    transform:
+        translateY(-8px);
+
+    background:
+        var(--card-hover);
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,.25);
+}
+
+.love-icon{
+    font-size:2rem;
+
+    margin-bottom:30px;
+}
+
+.love-card h3{
+    font-family:"Space Grotesk";
+}
+
+.love-card p{
+    color:var(--muted);
+
+    font-size:.77rem;
+
+    line-height:1.55;
+
+    margin-top:7px;
+}
+
+
+/* =====================================================
+   ACHIEVEMENTS
+===================================================== */
+
+.achievement-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+}
+
+.achievement{
+    padding:25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    background:
+        var(--card);
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.achievement::after{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    right:-70px;
+    top:-70px;
+
+    border-radius:50%;
+
+    background:var(--purple);
+
+    filter:blur(40px);
+
+    opacity:.18;
+}
+
+.badge{
+    width:54px;
+    height:54px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    font-size:1.5rem;
+
+    margin-bottom:20px;
+}
+
+.achievement h3{
+    font-family:"Space Grotesk";
+}
+
+.achievement p{
+    color:var(--muted);
+
+    font-size:.8rem;
+
+    line-height:1.7;
+
+    margin:8px 0 16px;
+}
+
+.unlocked{
+    color:var(--green);
+
+    font-size:.62rem;
+
+    letter-spacing:.12em;
+
+    font-weight:800;
+}
+
+
+/* =====================================================
+   SKILLS
+===================================================== */
+
+.skills-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:14px;
+}
+
+.skill{
+    padding:22px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    background:
+        var(--card);
+}
+
+.skill-top{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-bottom:11px;
+}
+
+.skill-top span{
+    color:var(--cyan);
+
+    font-size:.75rem;
+}
+
+.skill-bar{
+    height:8px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    overflow:hidden;
+}
+
+.skill-bar i{
+    display:block;
+
+    width:0;
+
+    height:100%;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--cyan),
+            var(--purple),
+            var(--pink)
+        );
+
+    transition:
+        width 1.3s ease;
+}
+
+
+/* =====================================================
+   FUTURE
+===================================================== */
+
+.future{
+    padding:35px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(155,92,255,.13),
+            rgba(255,94,188,.06)
+        );
+
+    overflow:hidden;
+
+    position:relative;
+}
+
+.future-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:30px;
+
+    align-items:center;
+}
+
+.future h3{
+    font-family:"Space Grotesk";
+
+    font-size:
+        clamp(2rem,5vw,3.5rem);
+
+    line-height:1;
+
+    letter-spacing:-.05em;
+}
+
+.future p{
+    color:var(--muted);
+
+    line-height:1.8;
+
+    margin-top:15px;
+}
+
+.goals{
+    display:grid;
+
+    gap:10px;
+}
+
+.goal{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:14px;
+
+    background:
+        rgba(0,0,0,.15);
+}
+
+.check{
+    width:23px;
+    height:23px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:7px;
+
+    color:var(--green);
+
+    background:
+        rgba(98,230,167,.1);
+}
+
+
+/* =====================================================
+   CONTACT
+===================================================== */
+
+.contact{
+    text-align:center;
+}
+
+.contact-box{
+    padding:50px 25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:30px;
+
+    background:
+        var(--card);
+}
+
+.contact-box p{
+    color:var(--muted);
+
+    margin:
+        12px 0 25px;
+}
+
+.socials{
+    displa
